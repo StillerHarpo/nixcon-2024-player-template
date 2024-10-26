@@ -1,7 +1,7 @@
 {-# LANGUAGE DataKinds #-}
 {-# LANGUAGE TypeOperators #-}
 
-module Webserver where
+module Main where
 
 import Network.Wai.Handler.Warp
 import Servant

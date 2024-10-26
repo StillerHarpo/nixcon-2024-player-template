@@ -26,7 +26,7 @@
               libraries = with pkgs.haskellPackages;
                 [ servant servant-server warp ];
             }
-            ./Webserver.hs;
+            ./Main.hs;
           default = packages.webserver;
         };
         apps.default = {
