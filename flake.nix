@@ -24,7 +24,7 @@
             "webserver"
             {
               libraries = with pkgs.haskellPackages;
-                [ servant ];
+                [ servant servant-server warp ];
             }
             ./Webserver.hs;
           default = packages.webserver;
@@ -42,6 +42,21 @@
               '';
             }
           );
+        };
+
+      devShells.default =
+        pkgs.haskellPackages.developPackage {
+          returnShellEnv = true;
+          root = ./.;
+          withHoogle = false;
+          modifier = drv:
+            pkgs.haskell.lib.overrideCabal drv (attrs: {
+              buildTools =
+                (attrs.buildTools or [ ]) ++
+                (with pkgs; [
+                  cabal-install haskell-language-server hlint
+                ]);
+            });
         };
       }))
     //
@@ -74,5 +89,6 @@
 
       # Remove before starting the workshop - this is just for development
       checks = import ./checks.nix { inherit nixpkgs self; };
+
     };
 }
