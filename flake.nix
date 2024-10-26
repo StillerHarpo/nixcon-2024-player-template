@@ -20,7 +20,13 @@
       let pkgs = import nixpkgs { inherit system; };
       in rec {
         packages = {
-          webserver = pkgs.hello;
+          webserver = pkgs.writers.writeHaskell
+            "webserver"
+            {
+              libraries = with pkgs.haskellPackages;
+                [ servant ];
+            }
+            ./Webserver.hs;
           default = packages.webserver;
         };
         apps.default = {
